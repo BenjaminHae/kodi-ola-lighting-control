@@ -39,7 +39,7 @@ class DMXControl:
         self.forceStop=True
         self.thread.join()
     def GetNextData(self):
-        DMX = self.cDMX
+        DMX = self.cDMX[:]
         goal = self.dDMX
         Time = self.aTime
         for i in range(0,len(DMX)):
@@ -69,13 +69,12 @@ class DMXControl:
         # compute frame here
         newDMX = self.GetNextData()
         if self.forceResend or any([int(newDMX[i])!=int(self.cDMX[i]) for i in range(0, len(newDMX))]):
-            print([int(newDMX[i]) for i in range(0, len(newDMX))], ' ', [int(self.cDMX[i]) for i in range(0, len(newDMX))])
             data = array.array('B',[int(v) for v in newDMX])
             # send
             print("sending"+str(newDMX))
             self.wrapper.Client().SendDmx(self.universe, data, DMXSentCallback)#calling a method as a function
             self.forceResend = False
-            self.cDMX = newDMX
+        self.cDMX = newDMX
     
     def setChannel(self, channel, value, fadeTime=0):
       if fadeTime<1:
