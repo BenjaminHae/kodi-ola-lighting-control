@@ -64,7 +64,7 @@ class DMXControl:
       # schdule a function call in 100ms
       # we do this first in case the frame computation takes a long time.   i
       self.wrapper.AddEvent(self.TICK_INTERVAL, WrapperCallback)
-      
+      print("line 67")
       # compute frame here
       newDMX = self.GetNextData()
       if self.forceResend or any(int(newDMX[i])!=int(self.cDMX[i]) for i in range(0, len(newDMX))):
