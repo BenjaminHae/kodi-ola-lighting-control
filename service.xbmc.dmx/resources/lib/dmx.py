@@ -19,7 +19,7 @@ class DMXControl:
         self.dDMX = [0]*channels
         self.aTime = [0]*channels
         self.wrapper = ClientWrapper()
-        self.wrapper.AddEvent(TICK_INTERVAL, SendDMXFrame)
+        self.wrapper.AddEvent(self.TICK_INTERVAL, SendDMXFrame)
         self.wrapper.Run()
     
     def stop(self):
