@@ -4,9 +4,9 @@ from ola.ClientWrapper import ClientWrapper
 import time
 
 controlInstance = None
-def WrapperCallback()
+def WrapperCallback():
     controlInstance.SendDMXFrame()
-def DMXSentCallback(state)
+def DMXSentCallback(state):
     controlInstance.DmxSent(state)
 class DMXControl:
     cDMX=[]#current
