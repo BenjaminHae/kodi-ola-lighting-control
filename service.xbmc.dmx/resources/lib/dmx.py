@@ -37,11 +37,7 @@ class DMXControl:
     def stop(self):
         self.wrapper.Stop()
         self.forceStop=True
-        print("called stop, joining thread")
         self.thread.join()
-        print("Thread is gone")
-    def done(self):
-        print("returned from Wrapper")
     def GetNextData(self):
         DMX = self.cDMX
         goal = self.dDMX
@@ -63,7 +59,6 @@ class DMXControl:
 
     def DmxSent(self,state):# Careful is being called as a function not a method
       if not state.Succeeded():
-        print("Stopped from Callback")
         self.wrapper.Stop()
 
     def SendDMXFrame(self):
@@ -71,10 +66,9 @@ class DMXControl:
       # we do this first in case the frame computation takes a long time.   i
       if not self.forceStop:
         self.wrapper.AddEvent(self.TICK_INTERVAL, WrapperCallback)
-      print("line 67")
       # compute frame here
       newDMX = self.GetNextData()
-      if True or self.forceResend or any(int(newDMX[i])!=int(self.cDMX[i]) for i in range(0, len(newDMX))):
+      if self.forceResend or any([int(newDMX[i])!=int(self.cDMX[i]) for i in range(0, len(newDMX))]):
           data = array.array('B',[int(v) for v in newDMX])
           # send
           print("sending"+str(newDMX))
@@ -97,7 +91,6 @@ class DMXControl:
             time=[time]*len(value)
         for i in range(0,len(value)):
             self.setChannel(channels[i], value[i], time[i])
-        print(self.dDMX, ' ', self.cDMX)
     
     def resendDMX(self):
         self.forceResend = True
