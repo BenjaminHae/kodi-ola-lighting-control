@@ -10,6 +10,7 @@ class DMXControl:
 	TICK_INTERVAL = 30
 	universe = 0
 	wrapper = None
+	forceResend = False
 
 	def __init__(self):
 		self.wrapper = ClientWrapper()
@@ -49,13 +50,16 @@ class DMXControl:
 
 	  # compute frame here
 	  newDMX = self.GetNextData()
-	  if any(int(newDMX[i])!=int(self.cDMX[i]) for i in range(0, len(newDMX))):
+	  if forceResend or any(int(newDMX[i])!=int(self.cDMX[i]) for i in range(0, len(newDMX))):
 		  data = array.array('B',[int(v) for v in cDMX])
 		  # send
 		  wrapper.Client().SendDmx(universe, data, DmxSent)
+		  forceResend = False
 	  self.cDMX = newDMX
 	def setDMX(self, channel, value, fadeTime):
 	  if fadeTime<1:
 	  	fadeTime=1
 	  self.dDMX[channel] = value
 	  self.aTime[channel] = fadeTime
+	def resendDMX(self):
+		self.forceResend = True
