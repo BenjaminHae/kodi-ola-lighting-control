@@ -2,7 +2,7 @@
 import array
 from ola.ClientWrapper import ClientWrapper
 import time
-from multiprocessing import Pool
+import threading
 
 controlInstance = None
 def WrapperCallback():
@@ -17,6 +17,7 @@ class DMXControl:
     universe = 0
     wrapper = None
     forceResend = False
+    thread = None
 
     #inits the DMX Control but does not send any data
     def __init__(self, channels=4, universe=0):
@@ -28,12 +29,15 @@ class DMXControl:
         self.aTime = [0]*channels
         self.wrapper = ClientWrapper()
         self.wrapper.AddEvent(self.TICK_INTERVAL, WrapperCallback)
-        pool = Pool(processes=1)
-        result = pool.apply_async(self.wrapper.Run,[],self.done)
+        thread = threading.Thread(target=self.wrapper.Run)
+        thread.start()
         #self.wrapper.Run()
     
     def stop(self):
         wrapper.Stop()
+        print("called stop, joining thread")
+        thread.join()
+        print("Thread is gone")
     def done(self):
         print("returned from Wrapper")
     def GetNextData(self):
