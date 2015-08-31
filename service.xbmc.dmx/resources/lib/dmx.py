@@ -69,11 +69,11 @@ class DMXControl:
 	  self.aTime[channel] = fadeTime
 	
 	def setChannels(self, value, channels=None, time=None):
-		if channels=None:
+		if channels == None:
 			channels=[i for i in range(0, len(value))]
-		if time=None:
+		if time == None:
 			time=[0]*len(value)
-        if len(time)=1 and len(value)>1:
+        if len(time)==1 and len(value)>1:
             time=[time]*len(value)
 		for i in range(0,len(value)):
 			self.setChannel(channels[i], value[i], time[i])
@@ -95,10 +95,10 @@ class SimpleLight:
         this.currentState=state
         dmx.setChannels(self.dmxstate[state], time = fadetime)
     def more(self, d=1):
-      d=min(d,abs(len(self.dmxstate)-self.currentState))
-      self.setState(self.state+d)
+        d=min(d,abs(len(self.dmxstate)-self.currentState))
+        self.setState(self.state+d)
     def less(self, d=1):
-      d=min(d,self.currentState)
-      self.setState(self.state-d)
+        d=min(d,self.currentState)
+        self.setState(self.state-d)
     def stop():
         dmx.stop()
