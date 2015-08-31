@@ -104,7 +104,7 @@ class SimpleLight:
         self.setState(self.states[state]) 
     def setState(self, state):
         self.currentState=state
-        self.dmx.setChannels(self.dmxstate[state], time = fadetime)
+        self.dmx.setChannels(self.dmxstate[state], time = self.fadetime)
     def more(self, d=1):
         d=min(d,abs(len(self.dmxstate)-self.currentState))
         self.setState(self.state+d)
