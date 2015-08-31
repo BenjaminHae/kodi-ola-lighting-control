@@ -30,8 +30,8 @@ class DMXControl:
         self.aTime = [0]*channels
         self.wrapper = ClientWrapper()
         self.wrapper.AddEvent(self.TICK_INTERVAL, WrapperCallback)
-        thread = threading.Thread(target=self.wrapper.Run)
-        thread.start()
+        self.thread = threading.Thread(target=self.wrapper.Run)
+        self.thread.start()
         #self.wrapper.Run()
     
     def stop(self):
@@ -56,7 +56,6 @@ class DMXControl:
                     DMX[i]=0.0
                 elif DMX[i]>255:
                     DMX[i]=255.0
-        print(DMX)
         return DMX
 
     def isThereData(self):
@@ -98,6 +97,7 @@ class DMXControl:
             time=[time]*len(value)
         for i in range(0,len(value)):
             self.setChannel(channels[i], value[i], time[i])
+        print(self.dDMX, ' ', self.cDMX)
     
     def resendDMX(self):
         self.forceResend = True
