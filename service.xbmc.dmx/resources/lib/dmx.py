@@ -13,7 +13,7 @@ class DMXControl:
     cDMX=[]#current
     dDMX=[]#designated
     aTime=[]#time
-    TICK_INTERVAL = 30
+    TICK_INTERVAL = 1000
     universe = 0
     wrapper = None
     forceResend = False
@@ -50,6 +50,7 @@ class DMXControl:
                     DMX[i]=0.0
                 elif DMX[i]>255:
                     DMX[i]=255.0
+        print(DMX)
         return DMX
 
     def isThereData(self):
@@ -69,6 +70,7 @@ class DMXControl:
       if self.forceResend or any(int(newDMX[i])!=int(self.cDMX[i]) for i in range(0, len(newDMX))):
           data = array.array('B',[int(v) for v in cDMX])
           # send
+          print("sending"+str(newDMX))
           self.wrapper.Client().SendDmx(universe, data, DMXSentCallback)#calling a method as a function
           self.forceResend = False
       self.cDMX = newDMX
