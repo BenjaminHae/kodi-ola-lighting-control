@@ -7,6 +7,7 @@ sys.path.append(__resource__)
 from dmx import SimpleLight
 
 class Player(xbmc.Player):
+    dispatcher = None
     def __init__(self):
         super(Player, self).__init__()
 
@@ -18,18 +19,22 @@ class Player(xbmc.Player):
                     return
                 else:
                     xbmc.sleep(250)
-        self.onPlayBackStartedEx()#do dmx things here
-
-        def onPlayBackStopped(self):
-            pass
-        def onPlayBackEnded(self):
-            pass
-        def onPlayBackPaused(self):
-            pass
-        def onPlayBackResumed(self):
-            pass
+        dispatcher.play()
+           
+    def onPlayBackStopped(self):
+        dispatcher.pause()
+        
+    def onPlayBackEnded(self):
+        dispatcher.pause()
+        
+    def onPlayBackPaused(self):
+        dispatcher.pause()
+        
+    def onPlayBackResumed(self):
+        dispatcher.play()
 
 class Monitor(xbmc.Monitor):
+    dispatcher = None
     # Energy Savings mode
     def onDPMSActivated(self):
         pass
@@ -42,20 +47,32 @@ class Monitor(xbmc.Monitor):
 
 class Dispatcher:
     light = None
+    player = None
     def checkPlaying(self):
-    	pass
+        return player.isPlayingVideo()
+        
     def pause(self):
-    	light.setState('bright')
+        light.setState('bright')
+        
     def play(self):
-    	light.setState('dark')
+        if self.checkPlaying():
+            light.setState('dark')
 
 if __name__ == '__main__':
-    monitor = xbmc.Monitor()
+    dispatcher = Dispatcher()
+    monitor = Monitor()
+    player = Player()
+    light = SimpleLight()
+    dispatcher.light = light
+    dispatcher.player = player
+    monitor.dispatcher = dispatcher
+    player.dispatcher = dispatcher
     while not monitor.abortRequested():
         # Sleep/wait for abort for 10 seconds
         if monitor.waitForAbort(10):
             # Abort was requested while waiting. We should exit
             break
         xbmc.log("dmx %s" % time.time(), level=xbmc.LOGDEBUG)
+    dispatcher.pause()
+    light.stop()
     xbmc.log("dmx aborted %s" % time.time(), level=xbmc.LOGDEBUG)
-
