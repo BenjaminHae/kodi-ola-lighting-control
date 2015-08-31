@@ -1,6 +1,10 @@
 import time
 import xbmc
-import dmx
+import sys
+__cwd__ = xbmc.translatePath(__addon__.getAddonInfo('path')).decode('utf-8')
+__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources', 'lib')).decode('utf-8')
+sys.path.append(__resource__)
+from dmx import SimpleLight
 
 class Player(xbmc.Player):
     def __init__(self):
@@ -44,23 +48,6 @@ class Dispatcher:
     	light.setState('bright')
     def play(self):
     	light.setState('dark')
-
-
-class Light:
-    states={'black':0,'dark':1,'night':2,'medium':3,'bright':4,'full':5}
-    dmxstate=[[0,0,0,255],[75,75,75,255],[120,120,120,255],[150,150,150,255],[200,200,200,255],[255,255,255,255]]
-    fadetime=1000
-    currentState=0
-    def setStateByName(self, state):
-        self.setState(states[state]) 
-    def setState(self, state):
-        pass
-    def more(self, d=1):
-    	d=min(d,abs(len(self.dmxstate)-self.currentState))
-	self.setState(self.state+d)
-    def less(self, d=1):
-    	d=min(d,self.currentState)
-	self.setState(self.state-d)
 
 if __name__ == '__main__':
     monitor = xbmc.Monitor()
