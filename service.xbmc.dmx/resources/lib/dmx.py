@@ -44,7 +44,7 @@ class DMXControl:
 	def isThereData(self):
 		return any(v>0 for v in self.aTime)
 
-	def DmxSent(state):# Careful
+	def DmxSent(self,state):# Careful is being called as a function not a method
 	  if not state.Succeeded():
 	    wrapper.Stop()
 
@@ -58,7 +58,7 @@ class DMXControl:
 	  if forceResend or any(int(newDMX[i])!=int(self.cDMX[i]) for i in range(0, len(newDMX))):
 		  data = array.array('B',[int(v) for v in cDMX])
 		  # send
-		  wrapper.Client().SendDmx(universe, data, DmxSent)
+		  wrapper.Client().SendDmx(universe, data, self.DmxSent.im_func)#calling a method as a function
 		  forceResend = False
 	  self.cDMX = newDMX
 	
@@ -73,6 +73,8 @@ class DMXControl:
 			channels=[i for i in range(0, len(value))]
 		if time=None:
 			time=[0]*len(value)
+        if len(time)=1 and len(value)>1:
+            time=[time]*len(value)
 		for i in range(0,len(value)):
 			self.setChannel(channels[i], value[i], time[i])
 	
@@ -84,13 +86,19 @@ class SimpleLight:
     dmxstate=[[0,0,0,255],[75,75,75,255],[120,120,120,255],[150,150,150,255],[200,200,200,255],[255,255,255,255]]
     fadetime=1000
     currentState=0
+    dmx = None
+    def __init__(self):
+        self.dmx = DMXControl(4,0)
     def setStateByName(self, state):
         self.setState(states[state]) 
     def setState(self, state):
-        pass
+        this.currentState=state
+        dmx.setChannels(self.dmxstate[state], time = fadetime)
     def more(self, d=1):
       d=min(d,abs(len(self.dmxstate)-self.currentState))
       self.setState(self.state+d)
     def less(self, d=1):
       d=min(d,self.currentState)
       self.setState(self.state-d)
+    def stop():
+        dmx.stop()
