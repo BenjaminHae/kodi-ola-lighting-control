@@ -34,7 +34,7 @@ class DMXControl:
     
     def stop(self):
         wrapper.Stop()
-    def done():
+    def done(self):
         print("returned from Wrapper")
     def GetNextData(self):
         DMX = self.cDMX
@@ -103,7 +103,7 @@ class SimpleLight:
     def setStateByName(self, state):
         self.setState(states[state]) 
     def setState(self, state):
-        this.currentState=state
+        self.currentState=state
         dmx.setChannels(self.dmxstate[state], time = fadetime)
     def more(self, d=1):
         d=min(d,abs(len(self.dmxstate)-self.currentState))
@@ -111,5 +111,5 @@ class SimpleLight:
     def less(self, d=1):
         d=min(d,self.currentState)
         self.setState(self.state-d)
-    def stop():
+    def stop(self):
         dmx.stop()
