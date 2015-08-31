@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="service.dmx" name="DMX service" version="0.0.1" provider-name="BenjaminH">
+  <requires>
+    <import addon="xbmc.python" version="2.14.0"/>
+  </requires>
+  <extension point="xbmc.service" library="service.py" start="startup"/>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en"></summary>
+    <description lang="en">Provides the ability to control light fixtures via dmx.
+    </description>
+    <disclaimer lang="en">For help ask me</disclaimer>
+    <platform>all</platform>
+    <source></source>
+    <website></website>
+    <forum></forum>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+	<language></language>
+	<email></email>
+  </extension>
+</addon>
