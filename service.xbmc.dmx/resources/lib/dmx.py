@@ -51,7 +51,7 @@ class DMXControl:
     def SendDMXFrame(self):
       # schdule a function call in 100ms
       # we do this first in case the frame computation takes a long time.   i
-      self.wrapper.AddEvent(TICK_INTERVAL, SendDMXFrame)
+      self.wrapper.AddEvent(self.TICK_INTERVAL, SendDMXFrame)
       
       # compute frame here
       newDMX = self.GetNextData()
