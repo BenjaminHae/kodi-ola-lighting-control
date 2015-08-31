@@ -42,15 +42,18 @@ class Dispatcher:
 class Light:
     states={'black':0,'dark':1,'night':2,'medium':3,'bright':4,'full':5}
     dmxstate=[[0,0,0,255],[75,75,75,255],[120,120,120,255],[150,150,150,255],[200,200,200,255],[255,255,255,255]]
+    fadetime=1000
     currentState=0
     def setStateByName(self, state):
-        pass
+        self.setState(states[state]) 
     def setState(self, state):
         pass
-    def more(self):
-        pass
-    def less(self):
-        pass
+    def more(self, d=1):
+    	d=min(d,abs(len(self.dmxstate)-self.currentState))
+	self.setState(self.state+d)
+    def less(self, d=1):
+    	d=min(d,self.currentState)
+	self.setState(self.state-d)
 
 if __name__ == '__main__':
     monitor = xbmc.Monitor()
