@@ -58,6 +58,7 @@ class DMXControl:
 
     def DmxSent(self,state):# Careful is being called as a function not a method
       if not state.Succeeded():
+        print("Stopped from Callback")
         self.wrapper.Stop()
 
     def SendDMXFrame(self):
