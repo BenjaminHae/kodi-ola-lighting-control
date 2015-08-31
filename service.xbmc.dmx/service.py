@@ -37,7 +37,14 @@ class Monitor(xbmc.Monitor):
         pass
 
 class Dispatcher:
-    pass
+    light = None
+    def checkPlaying(self):
+    	pass
+    def pause(self):
+    	light.setState('bright')
+    def play(self):
+    	light.setState('dark')
+
 
 class Light:
     states={'black':0,'dark':1,'night':2,'medium':3,'bright':4,'full':5}
