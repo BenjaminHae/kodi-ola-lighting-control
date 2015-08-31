@@ -62,19 +62,20 @@ class DMXControl:
         self.wrapper.Stop()
 
     def SendDMXFrame(self):
-      # schdule a function call in 100ms
-      # we do this first in case the frame computation takes a long time.   i
-      if not self.forceStop:
-        self.wrapper.AddEvent(self.TICK_INTERVAL, WrapperCallback)
-      # compute frame here
-      newDMX = self.GetNextData()
-      if self.forceResend or any([int(newDMX[i])!=int(self.cDMX[i]) for i in range(0, len(newDMX))]):
-          data = array.array('B',[int(v) for v in newDMX])
-          # send
-          print("sending"+str(newDMX))
-          self.wrapper.Client().SendDmx(self.universe, data, DMXSentCallback)#calling a method as a function
-          self.forceResend = False
-      self.cDMX = newDMX
+        # schdule a function call in 100ms
+        # we do this first in case the frame computation takes a long time.   i
+        if not self.forceStop:
+          self.wrapper.AddEvent(self.TICK_INTERVAL, WrapperCallback)
+        # compute frame here
+        newDMX = self.GetNextData()
+        if self.forceResend or any([int(newDMX[i])!=int(self.cDMX[i]) for i in range(0, len(newDMX))]):
+            print([int(newDMX[i]) for i in range(0, len(newDMX))], ' ', [int(self.cDMX[i]) for i in range(0, len(newDMX))])
+            data = array.array('B',[int(v) for v in newDMX])
+            # send
+            print("sending"+str(newDMX))
+            self.wrapper.Client().SendDmx(self.universe, data, DMXSentCallback)#calling a method as a function
+            self.forceResend = False
+            self.cDMX = newDMX
     
     def setChannel(self, channel, value, fadeTime=0):
       if fadeTime<1:
