@@ -84,7 +84,7 @@ class DMXControl:
             channels=[i for i in range(0, len(value))]
         if time == None:
             time=[0]*len(value)
-        if len(time)==1 and len(value)>1:
+        if isinstance( time, ( int, long ) ) and len(value)>1:
             time=[time]*len(value)
         for i in range(0,len(value)):
             self.setChannel(channels[i], value[i], time[i])
