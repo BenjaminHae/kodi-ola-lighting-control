@@ -78,7 +78,7 @@ class DMXControl:
           data = array.array('B',[int(v) for v in newDMX])
           # send
           print("sending"+str(newDMX))
-          self.wrapper.Client().SendDmx(universe, data, DMXSentCallback)#calling a method as a function
+          self.wrapper.Client().SendDmx(self.universe, data, DMXSentCallback)#calling a method as a function
           self.forceResend = False
       self.cDMX = newDMX
     
