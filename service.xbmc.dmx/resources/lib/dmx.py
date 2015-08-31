@@ -75,7 +75,7 @@ class DMXControl:
       # compute frame here
       newDMX = self.GetNextData()
       if True or self.forceResend or any(int(newDMX[i])!=int(self.cDMX[i]) for i in range(0, len(newDMX))):
-          data = array.array('B',[int(v) for v in cDMX])
+          data = array.array('B',[int(v) for v in newDMX])
           # send
           print("sending"+str(newDMX))
           self.wrapper.Client().SendDmx(universe, data, DMXSentCallback)#calling a method as a function
