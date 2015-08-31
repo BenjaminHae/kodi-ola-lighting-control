@@ -3,6 +3,11 @@ import array
 from ola.ClientWrapper import ClientWrapper
 import time
 
+controlInstance = None
+def WrapperCallback()
+    controlInstance.SendDMXFrame()
+def DMXSentCallback(state)
+    controlInstance.DmxSent(state)
 class DMXControl:
     cDMX=[]#current
     dDMX=[]#designated
@@ -14,12 +19,14 @@ class DMXControl:
 
     #inits the DMX Control but does not send any data
     def __init__(self, channels=4, universe=0):
+        global controlInstance
+        controlInstance = self
         self.universe = universe
         self.cDMX = [0.0]*channels
         self.dDMX = [0]*channels
         self.aTime = [0]*channels
         self.wrapper = ClientWrapper()
-        self.wrapper.AddEvent(self.TICK_INTERVAL, staticmethod(self.SendDMXFrame))
+        self.wrapper.AddEvent(self.TICK_INTERVAL, WrapperCallback)
         self.wrapper.Run()
     
     def stop(self):
@@ -51,14 +58,14 @@ class DMXControl:
     def SendDMXFrame(self):
       # schdule a function call in 100ms
       # we do this first in case the frame computation takes a long time.   i
-      self.wrapper.AddEvent(self.TICK_INTERVAL, staticmethod(self.SendDMXFrame))
+      self.wrapper.AddEvent(self.TICK_INTERVAL, WrapperCallback)
       
       # compute frame here
       newDMX = self.GetNextData()
       if self.forceResend or any(int(newDMX[i])!=int(self.cDMX[i]) for i in range(0, len(newDMX))):
           data = array.array('B',[int(v) for v in cDMX])
           # send
-          self.wrapper.Client().SendDmx(universe, data, staticmethod(self.DmxSent))#calling a method as a function
+          self.wrapper.Client().SendDmx(universe, data, DMXSentCallback)#calling a method as a function
           self.forceResend = False
       self.cDMX = newDMX
     
