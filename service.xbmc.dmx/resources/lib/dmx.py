@@ -17,6 +17,7 @@ class DMXControl:
     universe = 0
     wrapper = None
     forceResend = False
+    forceStop = False
     thread = None
 
     #inits the DMX Control but does not send any data
@@ -34,9 +35,10 @@ class DMXControl:
         #self.wrapper.Run()
     
     def stop(self):
-        wrapper.Stop()
+        self.wrapper.Stop()
+        self.forceStop=True
         print("called stop, joining thread")
-        thread.join()
+        self.thread.join()
         print("Thread is gone")
     def done(self):
         print("returned from Wrapper")
@@ -68,7 +70,8 @@ class DMXControl:
     def SendDMXFrame(self):
       # schdule a function call in 100ms
       # we do this first in case the frame computation takes a long time.   i
-      self.wrapper.AddEvent(self.TICK_INTERVAL, WrapperCallback)
+      if not self.forceStop:
+        self.wrapper.AddEvent(self.TICK_INTERVAL, WrapperCallback)
       print("line 67")
       # compute frame here
       newDMX = self.GetNextData()
@@ -119,4 +122,4 @@ class SimpleLight:
         d=min(d,self.currentState)
         self.setState(self.state-d)
     def stop(self):
-        dmx.stop()
+        self.dmx.stop()
