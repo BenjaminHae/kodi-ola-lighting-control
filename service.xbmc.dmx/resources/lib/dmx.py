@@ -2,6 +2,7 @@
 import array
 from ola.ClientWrapper import ClientWrapper
 import time
+from multiprocessing import Pool
 
 controlInstance = None
 def WrapperCallback():
@@ -27,11 +28,14 @@ class DMXControl:
         self.aTime = [0]*channels
         self.wrapper = ClientWrapper()
         self.wrapper.AddEvent(self.TICK_INTERVAL, WrapperCallback)
-        self.wrapper.Run()
+        pool = Pool(processes=1)
+        result = pool.apply_async(self.wrapper.Run,[],self.done)
+        #self.wrapper.Run()
     
     def stop(self):
         wrapper.Stop()
-
+    def done():
+        print("returned from Wrapper")
     def GetNextData(self):
         DMX = self.cDMX
         goal = self.dDMX
