@@ -19,8 +19,8 @@ class DMXControl:
         self.dDMX = [0]*channels
         self.aTime = [0]*channels
         self.wrapper = ClientWrapper()
-        wrapper.AddEvent(TICK_INTERVAL, SendDMXFrame)
-        wrapper.Run()
+        self.wrapper.AddEvent(TICK_INTERVAL, SendDMXFrame)
+        self.wrapper.Run()
     
     def stop(self):
         wrapper.Stop()
@@ -46,20 +46,20 @@ class DMXControl:
 
     def DmxSent(self,state):# Careful is being called as a function not a method
       if not state.Succeeded():
-        wrapper.Stop()
+        self.wrapper.Stop()
 
     def SendDMXFrame(self):
       # schdule a function call in 100ms
       # we do this first in case the frame computation takes a long time.   i
-      wrapper.AddEvent(TICK_INTERVAL, SendDMXFrame)
+      self.wrapper.AddEvent(TICK_INTERVAL, SendDMXFrame)
       
       # compute frame here
       newDMX = self.GetNextData()
-      if forceResend or any(int(newDMX[i])!=int(self.cDMX[i]) for i in range(0, len(newDMX))):
+      if self.forceResend or any(int(newDMX[i])!=int(self.cDMX[i]) for i in range(0, len(newDMX))):
           data = array.array('B',[int(v) for v in cDMX])
           # send
-          wrapper.Client().SendDmx(universe, data, self.DmxSent.im_func)#calling a method as a function
-          forceResend = False
+          self.wrapper.Client().SendDmx(universe, data, self.DmxSent.im_func)#calling a method as a function
+          self.forceResend = False
       self.cDMX = newDMX
     
     def setChannel(self, channel, value, fadeTime=0):
