@@ -74,7 +74,7 @@ class DMXControl:
       print("line 67")
       # compute frame here
       newDMX = self.GetNextData()
-      if self.forceResend or any(int(newDMX[i])!=int(self.cDMX[i]) for i in range(0, len(newDMX))):
+      if True or self.forceResend or any(int(newDMX[i])!=int(self.cDMX[i]) for i in range(0, len(newDMX))):
           data = array.array('B',[int(v) for v in cDMX])
           # send
           print("sending"+str(newDMX))
