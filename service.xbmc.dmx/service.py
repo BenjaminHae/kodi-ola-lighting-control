@@ -55,11 +55,11 @@ class Dispatcher:
         return player.isPlayingVideo()
         
     def pause(self):
-        light.setStateByName('bright')
+        light.setStateByName('full')
         
     def play(self):
         if self.checkPlaying():
-            light.setStateByName('dark')
+            light.setStateByName('night')
 
 if __name__ == '__main__':
     dispatcher = Dispatcher()
