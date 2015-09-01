@@ -1,7 +1,7 @@
 # EditorConfig is awesome: http://EditorConfig.org
 
 # top-most EditorConfig file
-root = true
+root = false # so it uses per computer settings for newlines
 
 # Unix-style newlines with a newline ending every file
 [*]
