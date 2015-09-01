@@ -70,6 +70,7 @@ if __name__ == '__main__':
     dispatcher.player = player
     monitor.dispatcher = dispatcher
     player.dispatcher = dispatcher
+    dispachter.pause()
     while not monitor.abortRequested():
         # Sleep/wait for abort for 10 seconds
         if monitor.waitForAbort(10):
