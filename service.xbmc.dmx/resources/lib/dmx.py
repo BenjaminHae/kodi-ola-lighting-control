@@ -1,4 +1,5 @@
 #!/usr/bin/python
+#Todo: logarithmisches anpassen
 import array
 from ola.ClientWrapper import ClientWrapper
 import time
@@ -71,7 +72,6 @@ class DMXControl:
         if self.forceResend or any([int(newDMX[i])!=int(self.cDMX[i]) for i in range(0, len(newDMX))]):
             data = array.array('B',[int(v) for v in newDMX])
             # send
-            print("sending"+str(newDMX))
             self.wrapper.Client().SendDmx(self.universe, data, DMXSentCallback)#calling a method as a function
             self.forceResend = False
         self.cDMX = newDMX
