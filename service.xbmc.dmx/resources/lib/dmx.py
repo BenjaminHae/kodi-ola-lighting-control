@@ -14,7 +14,7 @@ class DMXControl:
     cDMX=[]#current
     dDMX=[]#designated
     aTime=[]#time
-    TICK_INTERVAL = 30
+    TICK_INTERVAL = 40
     universe = 0
     wrapper = None
     forceResend = False
