@@ -104,7 +104,7 @@ class DMXControl:
 class SimpleLight:
     states={'black':0,'dark':1,'night':2,'medium':3,'bright':4,'full':5}
     dmxstate=[[0,0,0,255],[255,25,25,255],[120,120,120,255],[150,150,150,255],[200,200,200,255],[255,255,255,255]]
-    fadetime=1000
+    fadetime=1500
     currentState=0
     dmx = None
     def __init__(self):
