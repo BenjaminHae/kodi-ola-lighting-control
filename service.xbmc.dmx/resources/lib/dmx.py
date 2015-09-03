@@ -28,8 +28,8 @@ class DMXControl:
         controlInstance = self
         self.universe = universe
         self.cDMX = [0.0]*channels
-        self.dDMX = [0.0]*channels
-        self.aTime = [0.0]*channels
+        self.dDMX = [0]*channels
+        self.aTime = [0]*channels
         self.wrapper = ClientWrapper()
         self.wrapper.AddEvent(self.TICK_INTERVAL, WrapperCallback)
         self.thread = threading.Thread(target=self.wrapper.Run)
@@ -49,7 +49,7 @@ class DMXControl:
                 DMX[i] += (goal[i]-DMX[i])/Time[i]*self.TICK_INTERVAL
                 Time[i] -= self.TICK_INTERVAL
                 if Time[i]<=0:
-                    DMX[i]=goal[i]
+                    DMX[i]=float(goal[i])
                 if DMX[i]<0:
                     DMX[i]=0.0
                 elif DMX[i]>255:
@@ -82,8 +82,8 @@ class DMXControl:
     def setChannel(self, channel, value, fadeTime=0, multiple = False):
         if fadeTime<1:
             fadeTime=1
-        self.dDMX[channel] = float(value)
-        self.aTime[channel] = float(fadeTime)
+        self.dDMX[channel] = value
+        self.aTime[channel] = fadeTime
         if (not self.active) and (not multiple):
             self.active=True
             self.wrapper.AddEvent(0, WrapperCallback)
