@@ -30,15 +30,12 @@ class DMXControl:
         self.cDMX = [0.0]*channels
         self.dDMX = [0.0]*channels
         self.aTime = [0.0]*channels
-        self.thread = threading.Thread(target=self.wrapperThread)
-        self.thread.start()
-        #self.wrapper.Run()
-        
-    def wrapperThread(self):
         self.wrapper = ClientWrapper()
         self.wrapper.AddEvent(self.TICK_INTERVAL, WrapperCallback)
-        self.wrapper.Run
-    
+        self.thread = threading.Thread(target=self.wrapper.Run)
+        self.thread.start()
+        #self.wrapper.Run()
+            
     def stop(self):
         self.wrapper.Stop()
         self.forceStop=True
