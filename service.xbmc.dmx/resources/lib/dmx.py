@@ -69,7 +69,7 @@ class DMXControl:
         if (not self.forceStop) and self.isThereData():
             self.wrapper.AddEvent(self.TICK_INTERVAL, WrapperCallback)
         else:
-            self.active=false
+            self.active=False
         # compute frame here
         newDMX = self.GetNextData()
         if self.forceResend or any([int(newDMX[i])!=int(self.cDMX[i]) for i in range(0, len(newDMX))]):
@@ -86,7 +86,7 @@ class DMXControl:
         self.aTime[channel] = fadeTime
         if not self.active:
             self.wrapper.AddEvent(self.TICK_INTERVAL, WrapperCallback)
-            self.active=true
+            self.active=True
     
     def setChannels(self, value, channels=None, time=None):
         if channels == None:
