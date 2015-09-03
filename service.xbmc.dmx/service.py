@@ -59,7 +59,7 @@ class Dispatcher:
         
     def play(self):
         if self.checkPlaying():
-            light.setStateByName('night')
+            light.setStateByName('dark')
 
 if __name__ == '__main__':
     dispatcher = Dispatcher()
