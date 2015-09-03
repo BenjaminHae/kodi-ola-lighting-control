@@ -20,6 +20,7 @@ class DMXControl:
     forceResend = False
     forceStop = False
     thread = None
+    active = True
 
     #inits the DMX Control but does not send any data
     def __init__(self, channels=4, universe=0):
@@ -65,8 +66,10 @@ class DMXControl:
     def SendDMXFrame(self):
         # schdule a function call in 100ms
         # we do this first in case the frame computation takes a long time.   i
-        if not self.forceStop:
-          self.wrapper.AddEvent(self.TICK_INTERVAL, WrapperCallback)
+        if (not self.forceStop) and self.isThereData():
+            self.wrapper.AddEvent(self.TICK_INTERVAL, WrapperCallback)
+        else:
+            self.active=false
         # compute frame here
         newDMX = self.GetNextData()
         if self.forceResend or any([int(newDMX[i])!=int(self.cDMX[i]) for i in range(0, len(newDMX))]):
@@ -77,10 +80,13 @@ class DMXControl:
         self.cDMX = newDMX
     
     def setChannel(self, channel, value, fadeTime=0):
-      if fadeTime<1:
-        fadeTime=1
-      self.dDMX[channel] = value
-      self.aTime[channel] = fadeTime
+        if fadeTime<1:
+            fadeTime=1
+        self.dDMX[channel] = value
+        self.aTime[channel] = fadeTime
+        if not self.active:
+            self.wrapper.AddEvent(self.TICK_INTERVAL, WrapperCallback)
+            self.active=true
     
     def setChannels(self, value, channels=None, time=None):
         if channels == None:
