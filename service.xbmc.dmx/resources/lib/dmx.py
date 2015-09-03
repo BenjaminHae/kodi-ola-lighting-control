@@ -79,14 +79,14 @@ class DMXControl:
             self.forceResend = False
         self.cDMX = newDMX
     
-    def setChannel(self, channel, value, fadeTime=0):
+    def setChannel(self, channel, value, fadeTime=0, multiple = False):
         if fadeTime<1:
             fadeTime=1
         self.dDMX[channel] = value
         self.aTime[channel] = fadeTime
-        if not self.active:
-            self.wrapper.AddEvent(self.TICK_INTERVAL, WrapperCallback)
+        if (not self.active) and (not multiple):
             self.active=True
+            self.wrapper.AddEvent(0, WrapperCallback)
     
     def setChannels(self, value, channels=None, time=None):
         if channels == None:
@@ -96,8 +96,10 @@ class DMXControl:
         if isinstance( time, ( int, long ) ) and len(value)>1:
             time=[time]*len(value)
         for i in range(0,len(value)):
-            self.setChannel(channels[i], value[i], time[i])
-    
+            self.setChannel(channels[i], value[i], time[i], True)
+        if (not self.active):
+            self.active=True
+            self.wrapper.AddEvent(0, WrapperCallback)
     def resendDMX(self):
         self.forceResend = True
 
