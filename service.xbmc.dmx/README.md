@@ -8,5 +8,5 @@ Supported Events
  - Play
  - Pause
  - Stop
- - Screensaver starts
- - Screensaver stops
+ - Screensaver starts(not implemented yet)
+ - Screensaver stops(not implemented yet)
