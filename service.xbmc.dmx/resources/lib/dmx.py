@@ -102,10 +102,13 @@ class DMXControl:
             self.wrapper.AddEvent(0, WrapperCallback)
     def resendDMX(self):
         self.forceResend = True
+        if not self.active:
+            self.active=True
+            self.wrapper.AddEvent(0,WrapperCallback)
 
 class SimpleLight:
     states={'black':0,'dark':1,'night':2,'medium':3,'bright':4,'full':5}
-    dmxstate=[[0,0,0,255],[255,25,25,255],[255,120,120,255],[255,150,150,255],[255,200,200,255],[255,255,255,255]]
+    dmxstate=[[0,0,0,255],[60,6,6,255],[255,120,120,255],[255,150,150,255],[255,200,200,255],[255,255,255,255]]
     fadetime=1500
     currentState=0
     dmx = None
