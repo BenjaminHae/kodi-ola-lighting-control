@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+  <string id="32001">DMX-Settings</string>
+  <string id="32012">DMX Offset</string>
+  <string id="32013">Channel Values Bright</string>
+  <string id="32014">Channel Values Dark</string>
+  <string id="32018">Try Dark</string>
+  <string id="32019">Try Bright</string>
+</strings>
