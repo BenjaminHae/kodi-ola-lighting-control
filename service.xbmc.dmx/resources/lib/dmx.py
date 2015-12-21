@@ -23,7 +23,7 @@ class DMXControl:
     active = True
 
     #inits the DMX Control but does not send any data
-    def __init__(self, channels=4, universe=0):
+    def __init__(self, channels=5, universe=0):
         global controlInstance
         controlInstance = self
         self.universe = universe
