@@ -113,7 +113,7 @@ class SimpleLight:
     currentState=0
     dmx = None
     def __init__(self):
-        self.dmx = DMXControl(4,0)
+        self.dmx = DMXControl(5,0)
     def setStateByName(self, state):
         self.setState(self.states[state]) 
     def setState(self, state):
