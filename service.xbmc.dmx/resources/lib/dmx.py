@@ -35,7 +35,7 @@ class DMXControl:
         self.thread = threading.Thread(target=self.wrapper.Run)
         self.thread.start()
         #self.wrapper.Run()
-            
+
     def stop(self):
         self.wrapper.Stop()
         self.forceStop=True
@@ -78,7 +78,7 @@ class DMXControl:
             self.wrapper.Client().SendDmx(self.universe, data, DMXSentCallback)#calling a method as a function
             self.forceResend = False
         self.cDMX = newDMX
-    
+
     def setChannel(self, channel, value, fadeTime=0, multiple = False):
         if fadeTime<1:
             fadeTime=1
@@ -87,7 +87,7 @@ class DMXControl:
         if (not self.active) and (not multiple):
             self.active=True
             self.wrapper.AddEvent(0, WrapperCallback)
-    
+
     def setChannels(self, value, channels=None, time=None):
         if channels == None:
             channels=[i for i in range(0, len(value))]
@@ -113,9 +113,9 @@ class SimpleLight:
     currentState=0
     dmx = None
     def __init__(self):
-        self.dmx = DMXControl(5,0)
+        self.dmx = DMXControl(5,1)
     def setStateByName(self, state):
-        self.setState(self.states[state]) 
+        self.setState(self.states[state])
     def setState(self, state):
         self.currentState=state
         self.dmx.setChannels(self.dmxstate[state], time = self.fadetime)

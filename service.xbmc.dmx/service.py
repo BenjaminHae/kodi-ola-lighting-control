@@ -23,16 +23,16 @@ class Player(xbmc.Player):
                 else:
                     xbmc.sleep(250)
         dispatcher.play()
-           
+
     def onPlayBackStopped(self):
         dispatcher.pause()
-        
+
     def onPlayBackEnded(self):
         dispatcher.pause()
-        
+
     def onPlayBackPaused(self):
         dispatcher.pause()
-        
+
     def onPlayBackResumed(self):
         dispatcher.play()
 
@@ -53,10 +53,10 @@ class Dispatcher:
     player = None
     def checkPlaying(self):
         return player.isPlayingVideo()
-        
+
     def pause(self):
         light.setStateByName('full')
-        
+
     def play(self):
         if self.checkPlaying():
             light.setStateByName('dark')
