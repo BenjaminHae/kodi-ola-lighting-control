@@ -63,6 +63,7 @@ class Dispatcher:
 
 if __name__ == '__main__':
     olaUniverse = __addon__.getSetting("dmxUniverse")
+    xbmc.log("dmx selected universe %s" % olaUniverse, level=xbmc.LOGDEBUG)
     dispatcher = Dispatcher()
     monitor = Monitor()
     player = Player()
