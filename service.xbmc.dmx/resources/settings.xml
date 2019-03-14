@@ -5,7 +5,7 @@
         <setting label="32012" type="number" id="dmxOffset" default="1"/>
         <setting label="32013" type="text" id="dmxBright" default="255;255;255;0;255"/>
         <setting label="32014" type="text" id="dmxDark" default="255;100;100;0;255"/>
-        <setting label="32015" type="number" id="dmxUniverse" default="255;100;100;0;255"/>
+        <setting label="32015" type="number" id="dmxUniverse" default="0"/>
         <setting type="sep"/>
         <setting label="32018" type="action" action="RunScript(service.dmx, testDark)"/>
         <setting label="32019" type="action" action="RunScript(service.dmx, testBright)"/>
