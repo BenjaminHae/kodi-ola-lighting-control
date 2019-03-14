@@ -112,8 +112,8 @@ class SimpleLight:
     fadetime=1500
     currentState=0
     dmx = None
-    def __init__(self):
-        self.dmx = DMXControl(6,1)
+    def __init__(self, universe):
+        self.dmx = DMXControl(6, universe)
     def setStateByName(self, state):
         self.setState(self.states[state])
     def setState(self, state):

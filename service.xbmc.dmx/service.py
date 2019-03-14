@@ -62,10 +62,11 @@ class Dispatcher:
             light.setStateByName('dark')
 
 if __name__ == '__main__':
+    olaUniverse = __addon__.getSetting("dmxUniverse")
     dispatcher = Dispatcher()
     monitor = Monitor()
     player = Player()
-    light = SimpleLight()
+    light = SimpleLight(olaUniverse)
     dispatcher.light = light
     dispatcher.player = player
     monitor.dispatcher = dispatcher
@@ -76,7 +77,7 @@ if __name__ == '__main__':
         if monitor.waitForAbort(10):
             # Abort was requested while waiting. We should exit
             break
-        xbmc.log("dmx %s" % time.time(), level=xbmc.LOGDEBUG)
+        xbmc.log("dmx alive %s" % time.time(), level=xbmc.LOGDEBUG)
     dispatcher.pause()
     light.stop()
     xbmc.log("dmx aborted %s" % time.time(), level=xbmc.LOGDEBUG)
