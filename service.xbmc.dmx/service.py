@@ -62,7 +62,7 @@ class Dispatcher:
             light.setStateByName('dark')
 
 if __name__ == '__main__':
-    olaUniverse = __addon__.getSetting("dmxUniverse")
+    olaUniverse = int(__addon__.getSetting("dmxUniverse"))
     xbmc.log("dmx selected universe %s" % olaUniverse, level=xbmc.LOGDEBUG)
     dispatcher = Dispatcher()
     monitor = Monitor()
